@@ -1,0 +1,8 @@
+torch>=2.2
+segmentation-models-pytorch>=0.3.3
+numpy
+opencv-python-headless
+nibabel
+pyyaml
+pillow
+pytest

@@ -1,0 +1,41 @@
+run_name: unet_r34_ctx0
+seed: 42
+
+data:
+  processed_dir: data/processed
+  image_size: 256
+  context: 0        # previous frames stacked as extra input channels (causal, no look-ahead)
+  frame_step: 1     # train on every Nth frame of each sequence
+  val_fraction: 0.1
+  test_fraction: 0.2
+  max_patients: null
+
+# Multi-label targets, each a union of CAMUS class ids. Labels overlap on purpose:
+# lv_epi contains both lv_endo and myocardium, so outputs are sigmoid, not softmax.
+labels:
+  lv_endo: [1]
+  myocardium: [2]
+  lv_epi: [1, 2]
+  left_atrium: [3]
+
+model:
+  arch: unet            # any segmentation_models_pytorch arch: unet, fpn, deeplabv3plus, ...
+  encoder: resnet34
+  encoder_weights: imagenet
+
+train:
+  epochs: 8
+  batch_size: 16
+  lr: 3.0e-4
+  weight_decay: 1.0e-4
+  num_workers: 2
+  amp: true
+  bce_weight: 0.5
+  pos_weight: null      # null, or "auto" to weight positives by label rarity
+  resume: false
+
+eval:
+  threshold: 0.5
+  min_area: 50          # pixels; a label counts as present in a frame above this
+  fail_dice: 0.7        # a frame is a failure for a label below this Dice
+  fail_min_frames: 3    # consecutive failed frames that make a sustained failure event
