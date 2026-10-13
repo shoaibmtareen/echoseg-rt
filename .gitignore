@@ -3,4 +3,5 @@ __pycache__/
 data/
 runs/
 *.pt
-benchmark.md
+/benchmark.md
+*.log

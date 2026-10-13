@@ -21,24 +21,42 @@ The model outlines four cardiac structures frame by frame on echocardiography vi
 
 ## Results
 
-Held-out test split: TODO patients, TODO sequences, TODO frames. Trained on a single TODO GPU.
+Held-out test split: 100 patients, 200 sequences, 3,828 frames, never seen in training (350 patients) or validation (50 patients). Each model trained for 8 epochs on one Tesla T4. Full reports, training logs and the exact patient split are in [results/](results/).
+
+Dice on the test patients:
 
 | Model | Mean Dice | lv_endo | myocardium | lv_epi | left_atrium |
 |---|---|---|---|---|---|
-| U-Net ResNet34, single frame | TODO | TODO | TODO | TODO | TODO |
-| U-Net ResNet34, 2 previous frames | TODO | TODO | TODO | TODO | TODO |
+| U-Net ResNet34, single frame | 0.908 | 0.931 | 0.859 | 0.952 | 0.891 |
+| U-Net ResNet34, 2 previous frames | 0.911 | 0.934 | 0.866 | 0.954 | 0.890 |
 
-Temporal stability, as mean frame-to-frame area change (lower is steadier; annotation value for reference):
+Temporal behaviour (jitter is mean frame-to-frame area change, lower is steadier; a sustained failure is 3 or more consecutive frames below 0.7 Dice for a label):
 
-| Model | myocardium jitter | left_atrium jitter |
-|---|---|---|
-| Annotation | TODO | TODO |
-| Single frame | TODO | TODO |
-| 2 previous frames | TODO | TODO |
+| Model | myocardium jitter | left_atrium jitter | sustained failures in 200 sequences |
+|---|---|---|---|
+| Annotation | 0.005 | 0.020 | n/a |
+| Single frame | 0.016 | 0.036 | 19 |
+| 2 previous frames | 0.012 | 0.030 | 16 |
 
-Inference latency at 256x256 (paste `runs/<run>/benchmark.md`):
+What the experiment shows:
 
-TODO
+- Temporal context barely moves Dice (+0.003) but makes the output steadier: jitter falls 25% on the myocardium and 17% on the left atrium. Both models still flicker more than the annotations.
+- The thin myocardium has the lowest Dice, and the left atrium accounts for most sustained failures (14 of the 19 for the single-frame model).
+- Accuracy degrades only slightly with image quality: mean Dice 0.912 on Good, 0.904 on Medium and 0.900 on Poor sequences (single-frame model).
+- Validation Dice plateaus after the first epoch while training loss keeps falling, so longer training would need stronger augmentation rather than more epochs.
+
+Inference on a Tesla T4 at 256x256, single-frame model ([full table](results/unet_r34_ctx0/benchmark.md)):
+
+| Variant | Batch | ms / frame | Frames / s |
+|---|---|---|---|
+| fp32 | 1 | 7.26 | 138 |
+| mixed precision | 1 | 8.16 | 123 |
+| mixed precision + channels_last + torch.compile | 1 | 3.29 | 304 |
+| fp32 | 8 | 4.49 | 223 |
+| mixed precision + channels_last | 8 | 1.98 | 506 |
+| mixed precision + channels_last + torch.compile | 8 | 1.37 | 730 |
+
+At batch size 1, which is what a live feed uses, mixed precision alone gives no speed-up; the gain comes from `torch.compile` (2.2x faster than fp32). Mixed precision pays off once frames are batched (2.3x at batch 8), at the cost of buffering delay. The benchmark times the network forward pass only, without video decoding or drawing.
 
 ## Metric definitions
 

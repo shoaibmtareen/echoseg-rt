@@ -1,0 +1,75 @@
+{
+ "run_name": "unet_r34_ctx2",
+ "config_hash": "ab85f4e0004d",
+ "checkpoint_epoch": 4,
+ "split": "test",
+ "patients": 100,
+ "sequences": 200,
+ "frames": 3828,
+ "video_minutes": 1.1540210558633082,
+ "mean_dice": 0.9111427719780736,
+ "mean_iou": 0.8420068469732802,
+ "dice_by_image_quality": {
+  "Good": 0.9159249283996195,
+  "Medium": 0.9055800379163405,
+  "Poor": 0.8990882058974924
+ },
+ "per_label": {
+  "lv_endo": {
+   "dice": 0.9342457925715368,
+   "iou": 0.8781679104388774,
+   "frame_precision": 1.0,
+   "frame_recall": 1.0,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 0,
+   "sustained_failures_per_sequence": 0.0,
+   "area_jitter_pred": 0.026428703714032994,
+   "area_jitter_gt": 0.024719093055147908
+  },
+  "myocardium": {
+   "dice": 0.8659588706977339,
+   "iou": 0.76647221904632,
+   "frame_precision": 1.0,
+   "frame_recall": 1.0,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 3,
+   "sustained_failures_per_sequence": 0.015,
+   "area_jitter_pred": 0.011979823659908932,
+   "area_jitter_gt": 0.004921793326380288
+  },
+  "lv_epi": {
+   "dice": 0.9540978637789833,
+   "iou": 0.9127551820625864,
+   "frame_precision": 1.0,
+   "frame_recall": 1.0,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 0,
+   "sustained_failures_per_sequence": 0.0,
+   "area_jitter_pred": 0.014235304279061141,
+   "area_jitter_gt": 0.0127556244570036
+  },
+  "left_atrium": {
+   "dice": 0.8902685608640403,
+   "iou": 0.8106320763453367,
+   "frame_precision": 1.0,
+   "frame_recall": 0.9997387669801463,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 13,
+   "sustained_failures_per_sequence": 0.065,
+   "area_jitter_pred": 0.029610956287310825,
+   "area_jitter_gt": 0.02003049859161675
+  }
+ }
+}

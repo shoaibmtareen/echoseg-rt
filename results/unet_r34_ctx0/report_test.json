@@ -1,0 +1,75 @@
+{
+ "run_name": "unet_r34_ctx0",
+ "config_hash": "664a086661c1",
+ "checkpoint_epoch": 4,
+ "split": "test",
+ "patients": 100,
+ "sequences": 200,
+ "frames": 3828,
+ "video_minutes": 1.1540210558633082,
+ "mean_dice": 0.9080350504558491,
+ "mean_iou": 0.8367968246775004,
+ "dice_by_image_quality": {
+  "Good": 0.9115066106496882,
+  "Medium": 0.9035909431181428,
+  "Poor": 0.9000275090835957
+ },
+ "per_label": {
+  "lv_endo": {
+   "dice": 0.9308542578974609,
+   "iou": 0.8721683700825289,
+   "frame_precision": 1.0,
+   "frame_recall": 1.0,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 1,
+   "sustained_failures_per_sequence": 0.005,
+   "area_jitter_pred": 0.02769680208888042,
+   "area_jitter_gt": 0.024719093055147908
+  },
+  "myocardium": {
+   "dice": 0.858551417308894,
+   "iou": 0.7553734503361881,
+   "frame_precision": 1.0,
+   "frame_recall": 1.0,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 4,
+   "sustained_failures_per_sequence": 0.02,
+   "area_jitter_pred": 0.015609347837774644,
+   "area_jitter_gt": 0.004921793326380288
+  },
+  "lv_epi": {
+   "dice": 0.9516072144875299,
+   "iou": 0.9082963781208553,
+   "frame_precision": 1.0,
+   "frame_recall": 1.0,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 0,
+   "sustained_failures_per_sequence": 0.0,
+   "area_jitter_pred": 0.015803831112176984,
+   "area_jitter_gt": 0.0127556244570036
+  },
+  "left_atrium": {
+   "dice": 0.8911273121295116,
+   "iou": 0.8113491001704294,
+   "frame_precision": 1.0,
+   "frame_recall": 1.0,
+   "gt_events": 200,
+   "event_recall": 1.0,
+   "false_alarms": 0,
+   "false_alarms_per_min": 0.0,
+   "sustained_failures": 14,
+   "sustained_failures_per_sequence": 0.07,
+   "area_jitter_pred": 0.03551889013292836,
+   "area_jitter_gt": 0.02003049859161675
+  }
+ }
+}
